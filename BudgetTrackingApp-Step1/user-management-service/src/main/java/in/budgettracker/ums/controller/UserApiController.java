@@ -27,14 +27,12 @@ public class UserApiController {
 
 	@GetMapping
 	public ResponseEntity<List<UserEntity>> defaultReqeustHandler(){
-		//return new ResponseEntity<List<UserEntity>>(userService.getAll(), HttpStatus.OK);
 		return ResponseEntity.ok(userService.getAll());
 	}
 	
 	@GetMapping("/{userId:[0-9]+}")
 	public ResponseEntity<UserEntity> getUserByIdHandler(@PathVariable("userId")Long userId){
 		UserEntity user = userService.getById(userId);
-		//return user==null ? ResponseEntity.notFound().build() : ResponseEntity.ok(user); 
 		return user==null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : ResponseEntity.ok(user);
 	}	
 	
@@ -45,19 +43,22 @@ public class UserApiController {
 	}	
 	
 	@PostMapping
-	public ResponseEntity<UserEntity> addUserHandler(@RequestBody UserEntity user) throws UserManagementException{
+	public ResponseEntity<UserEntity> addUserHandler(@RequestBody UserEntity user) 
+			throws UserManagementException{
 		user = userService.add(user);
 		return new ResponseEntity<>(user,HttpStatus.CREATED) ;
 	}	
 	
 	@PutMapping
-	public ResponseEntity<UserEntity> saveUserHandler(@RequestBody UserEntity user) throws UserManagementException{
+	public ResponseEntity<UserEntity> saveUserHandler(@RequestBody UserEntity user) 
+			throws UserManagementException{
 		user = userService.update(user);
 		return new ResponseEntity<>(user,HttpStatus.ACCEPTED) ;
 	}
 	
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<Void> deleteUserByIdHandler(@PathVariable("userId")Long userId) throws UserManagementException{
+	public ResponseEntity<Void> deleteUserByIdHandler(@PathVariable("userId")Long userId) 
+			throws UserManagementException{
 		userService.deleteById(userId); 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
