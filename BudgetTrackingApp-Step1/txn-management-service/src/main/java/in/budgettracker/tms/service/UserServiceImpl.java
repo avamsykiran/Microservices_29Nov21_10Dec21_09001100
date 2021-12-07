@@ -27,8 +27,11 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserModel getUserById(Long userId) throws TxnManagementException {
-		UserModel userModel=proxy.getUserById(userId);
+		
+		UserModel userModel=proxy.getUserById(userId); //tms talking to ums via FeignClient
+		
 		UserEntity userEntity = userRepo.findById(userId).orElse(null);
+		
 		if(userEntity!=null) {
 			if(userModel!=null) {
 				userModel.setCurrentBal(userEntity.getCurrentBal());
@@ -52,10 +55,10 @@ public class UserServiceImpl implements UserService {
 		UserModel userModel=null;
 		
 		if(user.getUserId()!=null)
-		 userModel = proxy.getUserById(user.getUserId());
+		 userModel = proxy.getUserById(user.getUserId()); //tms talking to ums via FeignClient
 		
 		if(userModel==null) {
-			userModel = proxy.createUser(user);
+			userModel = proxy.createUser(user); //tms talking to ums via FeignClient
 		}
 		
 		userRepo.save(new UserEntity(userModel.getUserId(), 0.0, null));
