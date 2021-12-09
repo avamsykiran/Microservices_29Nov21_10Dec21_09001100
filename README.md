@@ -210,8 +210,35 @@ Deve Platforma and Tools
     Case Study Implementation
     --------------------------------------------------
 
-    Setep 1:    Develop the microsoervices and provide inter-service communication
+    Step 1:    Develop the microsoervices and provide inter-service communication
 
-        user-management-service
-        txn-management-service
-        report-management-service
+        user-management-service spring boot,spring web,spring data jpa,MySql driver,dev tools,spring cloud open feign
+                                @SpringBootApplication
+                                @EnableFeignClients 
+        txn-management-service  spring boot,spring web,spring data jpa,MySql driver,dev tools,spring cloud open feign
+                                @SpringBootApplication
+                                @EnableFeignClients 
+        reporting-service       spring boot,spring web,dev tools,spring cloud open feign
+                                @SpringBootApplication
+                                @EnableFeignClients 
+
+    Step 2:   Discovery Service and Cleint Side Load Balancing
+
+        bt-discovery-service            spring boot,dev tools,netflix eureka server
+                                        @SpringBootApplication
+                                        @EnableEurekaServer
+
+        user-management-service         spring cloud discovery client,spring cloud loadbaalncer
+                                        @SpringBootApplication
+                                        @EnableFeignClients 
+                                        @EnableDiscoveryClient
+
+        txn-management-service          spring cloud discovery client,spring cloud loadbaalncer
+                                        @SpringBootApplication
+                                        @EnableFeignClients 
+                                        @EnableDiscoveryClient
+
+        reporting-service               spring cloud discovery client,spring cloud loadbaalncer
+                                        @SpringBootApplication
+                                        @EnableFeignClients 
+                                        @EnableDiscoveryClient
