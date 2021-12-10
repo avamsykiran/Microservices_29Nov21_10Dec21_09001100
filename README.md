@@ -210,7 +210,7 @@ Deve Platforma and Tools
     Case Study Implementation
     --------------------------------------------------
 
-    Step 1:    Develop the microsoervices and provide inter-service communication
+    Step 1:  Decomposition Design Pattern - Develop the microsoervices and provide inter-service communication
 
         user-management-service spring boot,spring web,spring data jpa,MySql driver,dev tools,spring cloud open feign
                                 @SpringBootApplication
@@ -222,23 +222,81 @@ Deve Platforma and Tools
                                 @SpringBootApplication
                                 @EnableFeignClients 
 
-    Step 2:   Discovery Service and Cleint Side Load Balancing
+    Step 2: Cross Cutting Desing Pattern - Discovery Service and Client Side Load Balancing
 
-        bt-discovery-service            spring boot,dev tools,netflix eureka server
+        bt-discovery-service            spring boot,dev tools,
+                                        netflix eureka server
                                         @SpringBootApplication
                                         @EnableEurekaServer
 
-        user-management-service         spring cloud discovery client,spring cloud loadbaalncer
+        user-management-service         spring cloud discovery client,
+                                        spring cloud loadbaalncer
                                         @SpringBootApplication
                                         @EnableFeignClients 
                                         @EnableDiscoveryClient
 
-        txn-management-service          spring cloud discovery client,spring cloud loadbaalncer
+        txn-management-service          spring cloud discovery client,
+                                        spring cloud loadbaalncer
                                         @SpringBootApplication
                                         @EnableFeignClients 
                                         @EnableDiscoveryClient
 
-        reporting-service               spring cloud discovery client,spring cloud loadbaalncer
+        reporting-service               spring cloud discovery client,
+                                        spring cloud loadbaalncer
                                         @SpringBootApplication
                                         @EnableFeignClients 
                                         @EnableDiscoveryClient
+
+    Step 3:   Integration Design Patterns - API Gateway
+
+        bt-gateway-service              spring boot,dev tools,
+                                        Spring Cloud Api Gateway
+                                        spring cloud discovery client,
+                                        spring cloud loadbaalncer
+                                        @SpringBootApplication
+                                        @EnableDiscoveryClient
+
+        bt-discovery-service            
+        user-management-service         
+        txn-management-service          
+        reporting-service               
+
+    Step 4:   Observability Design Pattern - Distributed Tracing and Log Aggregation - Sleuth + Zipkin
+    Step 5:   Cross Cutting Design Pattern - Circuit Breaking and Fallback - Reselieance4j
+    Step 6:   Cross Cutting Design Pattern - External Config - Spring Cloud Config Server
+
+    Recomendations : Prometheus - Metrics Aggregation - Observability Pattern
+                     OAuth 2.0 + Spring Security
+                     CQRS / Saga / Event Driven Micorservices ----------> RabbitMQ / Kafka
+                     Jenkins + Docker + Kubernates + AWS 
+
+
+    Assignment (D2H Portal)
+    -------------------------------------------------------------------------------------
+
+                                AngularApp / AndriodApp /ReactApp..etc
+                                            |↑
+                                            ↓|
+                            API GATEWAY SERVICE / EDGE SERVICE   <--------->        Discovery Service
+                                            |↑                                                  ↑↓
+                ------------[register self and discover the peer microservice]--------------------
+                ↑↓                          ↓|                                                  ↑↓
+                ||    --------------------------------------------------------------------      ||
+                ||    ↑↓                                                                ↑↓      ||
+            Consumer-Service   <-------------------------------------------------->  Billing-Service                 
+             ↑↓                                                                       ↓↑
+           cDB                                                                        bDB
+           /consuemr                                                                /consumer/{mobile}/bills
+            ConsumerEntity                                                              ConsumerEntity
+                mobile (PK)                                                                mobile (PK)
+                fullName                                                                    totalOutStanding
+                emailId                                                                      bills (Set<BillEntity>)
+                address                                                                 BillEntity
+                                                                                            billId
+                                                                                            billDate
+                                                                                            dueDate
+                                                                                            billAmount
+                                                                                            status : (PENDING/PAID)
+                                                                                            billedFor : Cosnuemr
+
+                
