@@ -262,7 +262,22 @@ Deve Platforma and Tools
         reporting-service               
 
     Step 4:   Observability Design Pattern - Distributed Tracing and Log Aggregation - Sleuth + Zipkin
+
+        bt-gateway-service             spring cloud sleuth,spring boot actuator,spring cloud starter sipkin
+        bt-discovery-service            
+        user-management-service        spring cloud sleuth,spring boot actuator,spring cloud starter zipkin 
+        txn-management-service         spring cloud sleuth,spring boot actuator,spring cloud starter zipkin 
+        reporting-service              spring cloud sleuth,spring boot actuator,spring cloud starter zipkin
+
+        zipkin executable jar            
+                https://search.maven.org/remote_content?g=io.zipkin&a=zipkin-server&v=LATEST&c=exec 
+                java -jar zipkin.jar
+
     Step 5:   Cross Cutting Design Pattern - Circuit Breaking and Fallback - Reselieance4j
+
+        txn-management-service        spring cloud resilience4j
+        reporting-service             spring cloud resilience4j
+
     Step 6:   Cross Cutting Design Pattern - External Config - Spring Cloud Config Server
 
     Recomendations : Prometheus - Metrics Aggregation - Observability Pattern
