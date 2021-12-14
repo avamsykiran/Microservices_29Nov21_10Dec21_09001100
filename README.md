@@ -275,16 +275,26 @@ Deve Platforma and Tools
 
     Step 5:   Cross Cutting Design Pattern - Circuit Breaking and Fallback - Reselieance4j
 
+        bt-gateway-service             
+        bt-discovery-service            
+        user-management-service        
         txn-management-service        spring cloud resilience4j
         reporting-service             spring cloud resilience4j
 
     Step 6:   Cross Cutting Design Pattern - External Config - Spring Cloud Config Server
 
+        bt-gateway-service            spring cloud config client,spring cloud starter bootstrap
+        bt-discovery-service            
+        bt-config-service             spring cloud config server
+        user-management-service       spring cloud config client,spring cloud starter bootstrap 
+        txn-management-service        spring cloud config client,spring cloud starter bootstrap
+        reporting-service             spring cloud config client,spring cloud starter bootstrap
+
+
     Recomendations : Prometheus - Metrics Aggregation - Observability Pattern
                      OAuth 2.0 + Spring Security
                      CQRS / Saga / Event Driven Micorservices ----------> RabbitMQ / Kafka
                      Jenkins + Docker + Kubernates + AWS 
-
 
     Assignment (D2H Portal)
     -------------------------------------------------------------------------------------
